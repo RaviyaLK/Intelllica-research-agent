@@ -1,7 +1,7 @@
 
 # Intellica – Autonomous Research & Report Agent 🧠📄
 
-Intellica is an intelligent autonomous research assistant that performs real-time web research on a given topic, summarizes the findings using LLMs, and generates a downloadable PDF report with proper citations. It's designed as a helpful tool for knowledge workers, students, and researchers.
+Intellica is an intelligent autonomous research assistant that performs real-time web research on a given topic, summarizes the findings using LLMs, and generates report with proper citations. It's designed as a helpful tool for knowledge workers, students, and researchers.
 
 ---
 
@@ -31,16 +31,16 @@ INTELLICA-RESEARCH-AGENT/
 - 📄 **Full Article Extraction** with `newspaper3k`
 - 🧠 **Multi-step Reasoning** using LangGraph Agents + LLMs
 - ✍️ **Summarization and Report Writing**
-- 📁 **PDF Report Generation with Citations**
+- 📁 **Report Generation with Citations**
 - 🌐 **Simple Frontend** (HTML, CSS, JS) for testing
 
 ---
 
 ## 🌐 Frontend
 
-![Frontend Screenshot Placeholder](screeshots/1.png)
-![Frontend Screenshot Placeholder](screeshots/2.png)
-![Frontend Screenshot Placeholder](screeshots/3.png)
+![Frontend Screenshot Placeholder](screenshots/1.png)
+![Frontend Screenshot Placeholder](screenshots/2.png)
+![Frontend Screenshot Placeholder](screenshots/3.png)
 > This is a basic vanilla HTML/CSS/JavaScript interface for testing and development. It allows you to enter a topic and trigger the research process via FastAPI backend.
 
 ---
