@@ -58,7 +58,7 @@ This project uses **[LangGraph](https://www.langgraph.dev/)** for defining and m
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/intellica-research-agent.git
+git clone https://github.com/RaviyaLK/Intelllica-research-agent.git
 cd intellica-research-agent
 ```
 
@@ -81,6 +81,7 @@ Create a `.env` file in the root directory:
 
 ```
 RAPIDAPI_KEY=your_rapidapi_key
+OPENROUTER_API_KEY=your_openrouterapi_key
 ```
 
 ### 5. Run the App
@@ -100,6 +101,8 @@ Content-Type: application/json
 {
   "topic": "Impact of Artificial Intelligence on Healthcare"
 }
+
+or you can open index.html using Live Server.
 ```
 
 
