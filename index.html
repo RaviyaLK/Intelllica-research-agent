@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intellica Research Agent</title>
+  <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 2rem;
+      background-color: #f9f9f9;
+    }
+    #output {
+      white-space: pre-wrap;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    textarea {
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Intellica - Research Assistant</h1>
+    <form id="researchForm">
+      <label for="topic">Enter a Research Topic:</label>
+      <input type="text" id="topic" name="topic" required placeholder="e.g., Growth of AI in the last decade" />
+      <button type="submit">Generate Report</button>
+    </form>
+
+    <section id="loading" style="display:none;">⏳ Generating report, please wait...</section>
+
+    <section id="outputContainer" style="margin-top:2rem; display: none;">
+      <h3>📄 Research Report:</h3>
+      <article id="output"></article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const form = document.getElementById("researchForm");
+    const output = document.getElementById("output");
+    const outputContainer = document.getElementById("outputContainer");
+    const loading = document.getElementById("loading");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const topic = document.getElementById("topic").value.trim();
+      if (!topic) return;
+
+      outputContainer.style.display = "none";
+      loading.style.display = "block";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/v1/research", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ topic }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || "Something went wrong");
+        }
+
+        const data = await response.json();
+        const markdown = data.report;
+
+        output.innerHTML = marked.parse(markdown);
+        outputContainer.style.display = "block";
+      } catch (err) {
+        alert("❌ Error: " + err.message);
+      } finally {
+        loading.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
