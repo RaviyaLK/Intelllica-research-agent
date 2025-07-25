@@ -48,7 +48,7 @@ def report_node(state: StateSchema):
 
 ## Introduction
 
-This report provides an academic overview of the topic "{state.topic}", synthesizing key information extracted from relevant sources and research articles.
+The topic of **"{state.topic}"** is of growing interest in today's rapidly evolving technological and socio-economic landscape. This report aims to explore and synthesize key insights derived from various credible sources, providing a comprehensive understanding of the subject matter. Through an automated web search and summarization process, the report presents a distilled overview of current trends, challenges, and emerging perspectives related to the topic. The goal is to facilitate further learning, spark critical thought, and encourage evidence-based discussions around "{state.topic}".
 
 ---
 
@@ -60,7 +60,7 @@ This report provides an academic overview of the topic "{state.topic}", synthesi
 
 ## Conclusion
 
-Based on the synthesized information, the findings highlight significant aspects and trends related to the topic under study, providing valuable insights for further exploration and understanding.
+In conclusion, the research on **"{state.topic}"** reveals a multifaceted perspective that integrates technological advancements, societal impacts, and evolving methodologies. The insights synthesized from the literature emphasize the significance of this topic in both academic and practical domains. As the field continues to develop, further investigation and continuous monitoring of new information are crucial. This report serves as a foundational stepping stone for deeper inquiry and informed decision-making in relation to "{state.topic}".
 
 ---
 
@@ -69,6 +69,7 @@ Based on the synthesized information, the findings highlight significant aspects
 {citations_text}
 """
     return {"report": report.strip()}
+
 
 
 # Graph building

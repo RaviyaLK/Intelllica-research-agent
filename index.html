@@ -4,42 +4,401 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Intellica Research Agent</title>
-  <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4338ca;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1a1a3e;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --text-primary: #ffffff;
+      --text-secondary: #a1a1aa;
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: rgba(0, 0, 0, 0.5);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
     body {
-      margin: 2rem;
-      background-color: #f9f9f9;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    #output {
-      white-space: pre-wrap;
-      padding: 1rem;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      max-width: 100%;
-      overflow-x: auto;
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
     }
-    textarea {
-      min-height: 100px;
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .logo {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Main form section */
+    .form-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 40px var(--shadow);
+      animation: fadeInUp 1s ease-out 0.2s both;
+      transition: all 0.3s ease;
+    }
+
+    .form-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .submit-btn {
+      background: var(--gradient);
+      border: none;
+      padding: 1.25rem 2rem;
+      border-radius: 16px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    /* Loading animation */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .loading-circle {
+      width: 60px;
+      height: 60px;
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .loading-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      animation: pulse 2s ease-in-out infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-subtext {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      opacity: 0.7;
+      font-weight: 300;
+      animation: fadeInOut 3s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Output section */
+    .output-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 20px 40px var(--shadow);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .output-header h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .report-content {
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+
+    .report-content h1, .report-content h2, .report-content h3 {
+      color: var(--text-primary);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .report-content h1 { font-size: 2rem; }
+    .report-content h2 { font-size: 1.5rem; }
+    .report-content h3 { font-size: 1.25rem; }
+
+    .report-content p {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .report-content ul, .report-content ol {
+      margin-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .report-content li {
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .report-content code {
+      background: rgba(99, 102, 241, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      color: var(--accent);
+    }
+
+    .report-content blockquote {
+      border-left: 4px solid var(--primary);
+      padding-left: 1.5rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .logo {
+        font-size: 2.5rem;
+      }
+      
+      .form-section, .output-section {
+        padding: 2rem;
+        border-radius: 16px;
+      }
+      
+      .submit-btn {
+        max-width: 100%;
+      }
+    }
+
+    /* Utility classes */
+    .hidden {
+      display: none !important;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1>Intellica - Research Assistant</h1>
-    <form id="researchForm">
-      <label for="topic">Enter a Research Topic:</label>
-      <input type="text" id="topic" name="topic" required placeholder="e.g., Growth of AI in the last decade" />
-      <button type="submit">Generate Report</button>
-    </form>
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">Intellica</h1>
+      <p class="subtitle">Advanced AI Research Assistant - Transforming questions into comprehensive insights</p>
+    </header>
 
-    <section id="loading" style="display:none;">⏳ Generating report, please wait...</section>
-
-    <section id="outputContainer" style="margin-top:2rem; display: none;">
-      <h3>📄 Research Report:</h3>
-      <article id="output"></article>
+    <section class="form-section">
+      <form id="researchForm">
+        <div class="form-group">
+          <label for="topic">Research Topic</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="topic" 
+              name="topic" 
+              required 
+              placeholder="Enter your research topic (e.g., Growth of AI in the last decade)"
+            />
+          </div>
+        </div>
+        <button type="submit" class="submit-btn">
+          <span>Generate Research Report</span>
+        </button>
+      </form>
     </section>
-  </main>
+
+    <section id="loading" class="loading hidden">
+      <div class="loading-circle"></div>
+      <div class="loading-text" id="loadingText">Analyzing and generating your research report...</div>
+      <div class="loading-subtext" id="loadingSubtext">This could take up to 5 minutes - hang tight while we craft your comprehensive report</div>
+    </section>
+
+    <section id="outputContainer" class="output-section hidden">
+      <div class="output-header">
+        <h3>📊 Research Report</h3>
+      </div>
+      <div id="output" class="report-content"></div>
+    </section>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
@@ -47,14 +406,20 @@
     const output = document.getElementById("output");
     const outputContainer = document.getElementById("outputContainer");
     const loading = document.getElementById("loading");
+    const formSection = document.querySelector(".form-section");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const topic = document.getElementById("topic").value.trim();
       if (!topic) return;
 
-      outputContainer.style.display = "none";
-      loading.style.display = "block";
+      // Hide previous results and show loading
+      outputContainer.classList.add("hidden");
+      loading.classList.remove("hidden");
+      
+      // Add subtle animation to form
+      formSection.style.transform = "scale(0.98)";
+      formSection.style.opacity = "0.7";
 
       try {
         const response = await fetch("http://127.0.0.1:8000/api/v1/research", {
@@ -73,14 +438,130 @@
         const data = await response.json();
         const markdown = data.report;
 
+        // Parse and display the report
         output.innerHTML = marked.parse(markdown);
-        outputContainer.style.display = "block";
+        
+        // Show results with animation
+        loading.classList.add("hidden");
+        outputContainer.classList.remove("hidden");
+        
+        // Scroll to results smoothly
+        setTimeout(() => {
+          outputContainer.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }, 100);
+
       } catch (err) {
-        alert("❌ Error: " + err.message);
+        // Create a modern error notification
+        showError("❌ Error: " + err.message);
       } finally {
-        loading.style.display = "none";
+        loading.classList.add("hidden");
+        
+        // Reset form animation
+        formSection.style.transform = "scale(1)";
+        formSection.style.opacity = "1";
       }
     });
+
+    function showError(message) {
+      // Create a temporary error notification
+      const errorDiv = document.createElement('div');
+      errorDiv.style.cssText = `
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        z-index: 1000;
+        animation: slideInRight 0.3s ease-out;
+        max-width: 400px;
+        font-weight: 500;
+      `;
+      errorDiv.textContent = message;
+      
+      document.body.appendChild(errorDiv);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        errorDiv.style.animation = 'slideOutRight 0.3s ease-out forwards';
+        setTimeout(() => errorDiv.remove(), 300);
+      }, 5000);
+    }
+
+    // Add some dynamic CSS for error animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add some interactive particles effect on hover
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.98) {
+        createParticle(e.clientX, e.clientY);
+      }
+    });
+
+    function createParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+        animation: particleFloat 2s ease-out forwards;
+        left: ${x}px;
+        top: ${y}px;
+      `;
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => particle.remove(), 2000);
+    }
+
+    // Add particle animation
+    const particleStyle = document.createElement('style');
+    particleStyle.textContent = `
+      @keyframes particleFloat {
+        0% {
+          opacity: 0.8;
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100px) scale(0);
+        }
+      }
+    `;
+    document.head.appendChild(particleStyle);
   </script>
 </body>
 </html>
