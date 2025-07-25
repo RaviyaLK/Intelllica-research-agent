@@ -1,24 +1,127 @@
-# Intellica 🧠📄  
-An Autonomous Research & Report Agent powered by LLMs + RAG + Web Search.
 
-## 🚀 Features
-- Multi-agent LLM pipeline (AutoGen)
-- Real-time web research with search APIs
-- Automatic summarization + report generation
-- RAG with FAISS and local chunk memory
-- FastAPI backend for frontend integration
+# Intellica – Autonomous Research & Report Agent 🧠📄
 
-## 📦 Tech Stack
-- Python, FastAPI
-- AutoGen / OpenAI GPT-4
-- FAISS, sentence-transformers
-- SerpAPI / Brave for web search
+Intellica is an intelligent autonomous research assistant that performs real-time web research on a given topic, summarizes the findings using LLMs, and generates a downloadable PDF report with proper citations. It's designed as a helpful tool for knowledge workers, students, and researchers.
 
-## 🛠 Setup Instructions
+---
+
+## 🏗️ Project Structure
+
+```
+INTELLICA-RESEARCH-AGENT/
+├── .env                          # Environment variables (RAPIDAPI_KEY etc.)
+├── .gitignore                   # Git ignored files
+├── index.html                   # Frontend (vanilla JS/HTML/CSS) – testing purpose only
+├── main.py                      # FastAPI entry point
+├── Readme.md                    # You're here
+├── api/
+│   └── routes.py                # API endpoints
+├── services/
+│   ├── agent_engine.py          # LangGraph-powered multi-step research agent
+│   ├── schemas.py               # Pydantic models for request/response
+│   ├── search.py                # Web search + full article extraction (Newspaper3k)
+│   └── summarize.py            # Summary generation and PDF creation
+```
+
+---
+
+## 🔍 Features
+
+- 🔎 **Real-Time Web Search** via RapidAPI
+- 📄 **Full Article Extraction** with `newspaper3k`
+- 🧠 **Multi-step Reasoning** using LangGraph Agents + LLMs
+- ✍️ **Summarization and Report Writing**
+- 📁 **PDF Report Generation with Citations**
+- 🌐 **Simple Frontend** (HTML, CSS, JS) for testing
+
+---
+
+## 🌐 Frontend
+
+![Frontend Screenshot Placeholder](screeshots/1.png)
+![Frontend Screenshot Placeholder](screeshots/2.png)
+![Frontend Screenshot Placeholder](screeshots/3.png)
+> This is a basic vanilla HTML/CSS/JavaScript interface for testing and development. It allows you to enter a topic and trigger the research process via FastAPI backend.
+
+---
+
+## 🧪 LangGraph Use
+
+This project uses **[LangGraph](https://www.langgraph.dev/)** for defining and managing the autonomous agent’s steps:
+- Search → Extract → Summarize → Compile → Return
+- LangGraph enables clear definition of step flows and memory between stages.
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/intellica-ai.git
-cd intellica-ai
-python -m venv venv
-source venv/bin/activate  # or .\venv\Scripts\activate
+git clone https://github.com/yourusername/intellica-research-agent.git
+cd intellica-research-agent
+```
+
+### 2. Create and Activate Virtual Environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate      # or `.venv\Scripts\activate` on Windows
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+### 4. Set Up Environment Variables
+
+Create a `.env` file in the root directory:
+
+```
+RAPIDAPI_KEY=your_rapidapi_key
+```
+
+### 5. Run the App
+
+```bash
+uvicorn main:app --reload
+```
+
+---
+
+## 🧪 Sample API Request (via frontend or POST)
+
+```http
+POST /api/v1/research
+Content-Type: application/json
+
+{
+  "topic": "Impact of Artificial Intelligence on Healthcare"
+}
+```
+
+
+
+## 📦 Dependencies
+
+- FastAPI
+- Newspaper3k
+- Requests
+- FPDF
+- LangGraph
+- Python-dotenv
+
+---
+
+
+---
+
+## 👨‍💻 Author
+
+Developed by [Ravindu Wijesekara](https://github.com/RaviyaLK) — Final Year SE Undergrad | AI + Backend Enthusiast
+
+---
+
+## 🌟 Star this repo if you like it!
